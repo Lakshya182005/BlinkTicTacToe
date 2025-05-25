@@ -13,8 +13,14 @@ function CheckWinner(board) {
   ];
   for (let match of matches) {
     const [a, b, c] = match;
-    if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-      return board[a];
+    if (
+      board[a]?.player &&
+      board[b]?.player &&
+      board[c]?.player &&
+      board[a].player === board[b].player &&
+      board[a].player === board[c].player
+    ) {
+      return board[a].player;
     }
   }
 

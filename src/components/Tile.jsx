@@ -1,12 +1,15 @@
 import React, { useContext } from 'react'
 import { GameContext } from '../context/GameContext'
+import CheckWinner from '../utils/CheckWinner'
 
 function Tile({index}) {
   const {state,dispatch}=useContext(GameContext)
   let cell = state.board[index]
-
   function handleClick(){
-    dispatch({ type: "Move", payload: { index } });
+    if (!state.winner){
+      dispatch({ type: "Move", payload: { index } });
+    }
+    
   }
   let burnClass = "bg-white";
 
