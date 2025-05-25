@@ -26,7 +26,7 @@ function gameRed(state, action) {
       const themeObj = themes.find(t => t.value === selectedTheme);
       const randomSymbols = getRandomPair(themeObj.emojis);
       return {
-        ...state,
+        ...initialState,
         theme: selectedTheme,
         playerSymbols: randomSymbols
       };

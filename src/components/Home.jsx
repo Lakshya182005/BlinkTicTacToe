@@ -5,23 +5,25 @@ const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen min-w-screen flex flex-col items-center justify-center bg-misty-grey gap-6">
-      <h1 className="text-4xl font-bold text-white">Blink Tac Toe</h1>
+    <div className="min-w-screen min-h-screen w-full flex items-center justify-center bg-[#faf8ef]">
+      <div className="w-full max-w-md flex flex-col items-center justify-center p-6">
+        <h1 className="text-5xl font-bold text-[#776e65] mb-10">Blink Tac Toe</h1>
 
-      <div className="flex flex-col gap-4">
-        <button
-          onClick={() => navigate("/style")}
-          className="px-6 py-3 bg-dusk-orange text-white rounded-lg shadow-md hover:scale-105 transition"
-        >
-          ▶️ Start Game
-        </button>
+        <div className="flex flex-col gap-4 w-full">
+          <button
+            onClick={() => navigate("/style")}
+            className="w-full py-4 bg-[#8f7a66] text-white text-xl font-semibold rounded shadow hover:bg-[#9c8674] transition duration-200"
+          >
+            ▶️ Start Game
+          </button>
 
-        <button
-          onClick={() => navigate("/rules")}
-          className="px-6 py-3 bg-sunset-coral text-white rounded-lg shadow-md hover:scale-105 transition"
-        >
-          📖 Read Rules
-        </button>
+          <button
+            onClick={() => navigate("/rules")}
+            className="w-full py-4 bg-[#edc22e] text-white text-xl font-semibold rounded shadow hover:bg-[#f2d06b] transition duration-200"
+          >
+            📖 Read Rules
+          </button>
+        </div>
       </div>
     </div>
   );
