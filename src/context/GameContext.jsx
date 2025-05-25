@@ -1,20 +1,38 @@
 import React, { createContext, useReducer } from "react";
 import CheckWinner from "../utils/CheckWinner";
+import { themes } from "../utils/ThemeOptions";
 
 let initialState = {
   board: Array(9).fill(null),
   currPlayer: 1,
   winner: null,
   moveCount: { 1: 0, 2: 0 },
-  suddenDeath: false
+  suddenDeath: false,
+  theme: null,
+  playerSymbols: { 1: "X", 2: "O" }
 };
 
 const GameContext = createContext();
 
+function getRandomPair(emojis) {
+  const shuffled = [...emojis].sort(() => 0.5 - Math.random());
+  return { 1: shuffled[0], 2: shuffled[1] };
+}
+
 function gameRed(state, action) {
   switch (action.type) {
+    case "Theme": {
+      const selectedTheme = action.payload.theme;
+      const themeObj = themes.find(t => t.value === selectedTheme);
+      const randomSymbols = getRandomPair(themeObj.emojis);
+      return {
+        ...state,
+        theme: selectedTheme,
+        playerSymbols: randomSymbols
+      };
+    }
+
     case "Move": {
-      console.log(state);
       const { index } = action.payload;
       const cell = state.board[index];
       const player = state.currPlayer;
@@ -22,24 +40,17 @@ function gameRed(state, action) {
 
       let newb = [...state.board];
 
-      if (state.winner) {
-        return state;
-      }
-      if (cell && cell.player === player) {
-        return state;
-      }
+      if (state.winner) return state;
+
+      if (cell && cell.player === player) return state;
 
       if (!state.suddenDeath) {
         if (!cell) {
-          const symbol = player === 1 ? "X" : "O";
+          const symbol = state.playerSymbols[player];
           newb[index] = { player, hp: 5, symbol };
         } else if (cell.player === opponent) {
           const newHp = cell.hp - 2;
-          if (newHp <= 0) {
-            newb[index] = null; 
-          } else {
-            newb[index] = { ...cell, hp: newHp };
-          }
+          newb[index] = newHp <= 0 ? null : { ...cell, hp: newHp };
         }
 
         newb = newb.map((tile) => {
@@ -50,23 +61,21 @@ function gameRed(state, action) {
           }
           return tile;
         });
-      }else{
+      } else {
         if (!cell) {
-          const symbol = player === 1 ? "X" : "O";
+          const symbol = state.playerSymbols[player];
           newb[index] = { player, hp: 5, symbol };
-        } 
+        }
       }
 
       const newMoveCount = {
         ...state.moveCount,
         [player]: state.moveCount[player] + 1
       };
-      let deathFlag = state.suddenDeath;
 
-      if (state.moveCount[1]>= 15) {
-        deathFlag = true;
-      }
+      const deathFlag = newMoveCount[1] >= 15 ? true : state.suddenDeath;
       const winner = CheckWinner(newb);
+
       return {
         ...state,
         board: newb,
@@ -76,14 +85,21 @@ function gameRed(state, action) {
         winner
       };
     }
+
     case "Winner":
       return {
         ...state,
         winner: action.payload.winner
       };
+
+      case "Reset":
+        return {
+          ...initialState,
+          theme: state.theme,
+          playerSymbols: state.playerSymbols
+        };
       
-    case "Reset":
-      return initialState;
+
     default:
       return state;
   }

@@ -12,7 +12,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/rules" element={<Rules />} />
         <Route path="/style" element={<StyleSelect />} />
-        <Route path="/game" element={<Board />} />
+        <Route path="/game-animals" element={<Board theme="animals"/>} />
+        <Route path="/game-food" element={<Board theme="food"/>} />
+        <Route path="/game-sports" element={<Board theme="sports"/>} />
       </Routes>
     </Router>
   );
