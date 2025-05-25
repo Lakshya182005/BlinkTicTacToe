@@ -25,6 +25,9 @@ function gameRed(state, action) {
       if (state.winner) {
         return state;
       }
+      if (cell && cell.player === player) {
+        return state;
+      }
 
       if (!state.suddenDeath) {
         if (!cell) {
