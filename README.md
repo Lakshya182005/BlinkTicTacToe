@@ -1,6 +1,6 @@
 # 🔥 Blink Tac Toe
 
-A strategic, fast-paced, emoji-powered twist on Tic Tac Toe — built with **React + Vite + Tailwind CSS** for the **Darban.ai Frontend Developer Challenge**.
+A strategic, fast-paced, emoji-powered twist on Tic Tac Toe — built with **React + Vite + Tailwind CSS**.
 
 🔗 **Live Demo:** [https://blink-tic-tac-toe.vercel.app](https://blink-tic-tac-toe.vercel.app)
 
